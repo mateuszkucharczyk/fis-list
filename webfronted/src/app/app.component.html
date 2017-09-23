@@ -1,0 +1,80 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}} Commissions
+  </h1>
+
+    <div class="container">
+      <table class="table is-striped" width="100%">
+        <thead>
+        <tr >
+          <th class="has-text-centered">id</th>
+          <th class="has-text-centered">name</th>
+          <th class="has-text-centered">count</th>
+          <th class="has-text-centered"></th>
+        </tr>
+        <tr>
+          <th class="has-text-centered">
+            <button class="button is-small is-primary"
+                    (click)="getCommissions()"
+                    [disabled]="isLoading"
+                    [class.is-loading]="isLoading">
+              <i class="fa fa-refresh"></i>
+            </button>
+          </th>
+          <th class="has-text-centered">
+            <div class="control">
+              <input
+                [(ngModel)]="newCommission.name"
+                #nameRef="ngModel"
+                name="nameOfNewCommission"
+                type="text"
+                required minlength="1"
+                class="input"
+              >
+            </div>
+          </th>
+          <th class="has-text-centered">
+            <div class="control">
+              <input
+                [(ngModel)]="newCommission.count"
+                name="countOfNewCommission"
+                #countRef="ngModel"
+                type="number"
+                required minlength="1"
+                class="input"
+                digits
+                [min]="0"
+                [class.is-danger]="countRef.errors?.digits || countRef.errors?.min"
+              >
+            </div>
+          </th>
+          <th class="has-text-centered">
+            <button
+               class="button is-small is-success"
+               (click)="onAdd(newCommission)"
+               [disabled]="isLoading || countRef.errors?.required || countRef.errors?.digits || countRef.errors?.min"
+            >
+              <i class="fa fa-plus"></i>
+            </button>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let commission of commissions; let i = 'index';">
+          <td class="has-text-centered">{{commission.id}}</td>
+          <td class="has-text-centered">{{commission.name}}</td>
+          <td class="has-text-centered">{{commission.count}}</td>
+          <td class="has-text-centered">
+            <button class="button is-small is-danger"
+                    [disabled]="isLoading"
+                    (click)="onDelete(commission, i)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
